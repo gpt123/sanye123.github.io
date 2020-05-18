@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>plaql基础 | 老高的小窝</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、    基本语法  准备工作i.    set serveroutput on—启用输入 最简基本结构Begin执行语句   –输出使用dbms_output.put_lineEnd;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="plaql基础">
+<meta property="og:url" content="https://sanye123.github.io/2020/05/18/plaql%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="老高的小窝">
+<meta property="og:description" content="一、    基本语法  准备工作i.    set serveroutput on—启用输入 最简基本结构Begin执行语句   –输出使用dbms_output.put_lineEnd;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-18T12:42:56.778Z">
+<meta property="article:modified_time" content="2020-05-18T12:44:04.074Z">
+<meta property="article:author" content="老高">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="老高的小窝" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">老高</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.bilibili.com/">bilibili</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">喜欢的东西很多，讨厌香菜！讨厌香菜！讨厌香菜！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">老高</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">老高</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-plaql基础" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/" class="article-date">
+      <time datetime="2020-05-18T12:42:56.778Z" itemprop="datePublished">2020-05-18</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      plaql基础
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>一、    基本语法</p>
+<ol>
+<li>准备工作<br>i.    set serveroutput on—启用输入</li>
+<li>最简基本结构<br>Begin<br>执行语句   –输出使用dbms_output.put_line<br>End;<a id="more"></a></li>
+<li>基本语法<br>declare<br>–声明变量、类型、游标<br>begin<br>–执行语句，相当于java中的main方法<br>Exception—针对与begin中出现的异常，提供处理机制<br>When—-then—–<br>End;</li>
+<li>变量</li>
+</ol>
+<p>i.    变量的声明<br>V_变量名 变量类型[数据大小]——-定义的变量大小不能小于数据大小<br>变量类型分：数据库类型及表引用类型<br>ii.    变量的使用<br>–通过select——-into——-语句为变量赋值<br>–被赋值的变量与SELECT中的列名要一一对应<br>Declare<br>            –声明变量、类型、游标<br>Begin<br>        –执行语句，相当于java中的main方法<br>Exception—针对与begin中出现的异常，提供处理机制<br>        When—-then—–<br>End;<br>赋值符号为变量赋值<br>    变量名:=值;<br>V_name:=值  or &amp;值<br>二、    记录类型</p>
+<ol>
+<li>什么是记录类型？<br>处理单行数据，它可以用来表示一行数据，数据的类型可以自己定义，也可以基于表来定义，相对于包、对象、嵌套表来说，他也能创建多个属性来保存数据，但是他只能一行，不像嵌套表那样可以无限行，也不能声明内部函数。</li>
+<li>记录类型语法：<br>declare<br>–定义一个记录类型，关键字record<br>type 记录名 is record<br>(<br>v_cust_name varchar2(20),  –自定义数据类型<br>v_cust_id number(10)<br>);<br>–声明自定义记录类型的变量<br>v_customer_type  customer_type;<br>begin</li>
+</ol>
+<p>–为变量赋值 赋值符号 :=<br>  v_customer_type.v_cust_name := ‘刘德华’;<br>  v_customer_type.v_cust_id := 1001;<br>bms_output.put_line(v_customer_type.v_cust_name||’,’||v_customer_type.v_cust_id);<br>end;<br>3.    使用 %type 定义变量，动态的获取数据的声明类型</p>
+<p>declare<br>  –定义一个记录类型<br>  type emp_record is record(<br>    v_name employees.last_name%type,<br>    v_email employees.email%type,<br>    v_salary employees.salary%type,<br>    v_job_id employees.job_id%type);</p>
+<p>  –声明自定义记录类型的变量<br>  v_emp_record emp_record;<br>begin<br>  –通过 select … into … 语句为变量赋值<br> select last_name, email, salary, job_id into v_emp_record<br> from employees<br> where employee_id = 186;<br>– 打印变量的值<br> dbms_output.put_line(v_emp_record.v_name || ‘, ‘ || v_emp_record.v_email || ‘, ‘ ||<br>                                        v_emp_record.v_salary || ‘, ‘ ||  v_emp_record.v_job_id);<br>end;</p>
+<ol start="4">
+<li>使用 %rowtype</li>
+</ol>
+<p>declare<br>–声明一个记录类型的变量<br>  v_emp_record employees%rowtype;<br>begin<br>  –通过 select … into … 语句为变量赋值<br> select * into v_emp_record<br> from employees<br> where employee_id = 186;</p>
+<p> – 打印变量的值<br> dbms_output.put_line(v_emp_record.last_name || ‘, ‘ || v_emp_record.email || ‘, ‘ ||<br>                                        v_emp_record.salary || ‘, ‘ ||  v_emp_record.job_id  || ‘, ‘ ||<br>                                        v_emp_record.hire_date);<br>end;<br>5.    通过变量实现DELETE、INSERT、UPDATE等操作</p>
+<p>declare<br>  v_emp_id employees.employee_id%type;</p>
+<p>begin<br>  v_emp_id := 109;<br>  delete from employees<br>  where employee_id = v_emp_id;<br>  –commit;<br>end;<br>三、    控制流程</p>
+<ol>
+<li><p>条件判断（两种）<br>i.    方式一：IF … THEN … ELSIF … THEN …ELSE … END IF;<br>要求: 查询出 150号 员工的工资, 若其工资大于或等于 10000 则打印 ‘salary &gt;= 10000’;<br>若在 5000 到 10000 之间, 则打印 ‘5000&lt;= salary &lt; 10000’; 否则打印 ‘salary &lt; 5000’<br>(方法一)<br>declare<br>v_salary employees.salary%type;<br>begin<br>–通过 select … into … 语句为变量赋值<br>select salary into v_salary<br>from employees<br>where employee_id = 150;</p>
+<p>dbms_output.put_line(‘salary: ‘ || v_salary);</p>
+<p>– 打印变量的值<br>if v_salary &gt;= 10000 then<br>dbms_output.put_line(‘salary &gt;= 10000’);<br>elsif v_salary &gt;= 5000 then<br>dbms_output.put_line(‘5000 &lt;= salary &lt; 10000’);<br>else<br>dbms_output.put_line(‘salary &lt; 5000’);<br>end if;<br>ii.    方式二：使用 CASE … WHEN … THEN …ELSE … END 完成上面的任务<br>使用 CASE … WHEN … THEN … ELSE … END;</p>
+</li>
+</ol>
+<p>要求: 查询出 122 号员工的 JOB_ID, 若其值为 ‘IT_PROG’, 则打印 ‘GRADE: A’; ‘AC_MGT’, 打印 ‘GRADE B’,<br> ‘AC_ACCOUNT’, 打印 ‘GRADE C’;<br>否则打印 ‘GRADE D’</p>
+<p>declare<br>       –声明变量<br>       v_grade char(1);<br>       v_job_id employees.job_id%type;<br>begin<br>       select job_id into v_job_id<br>       from employees<br>       where employee_id = 122;</p>
+<pre><code>dbms_output.put_line(&apos;job_id: &apos; || v_job_id);
+
+--根据 v_job_id 的取值, 利用 case 字句为 v_grade 赋值
+v_grade :=  
+        case v_job_id when &apos;IT_PROG&apos; then &apos;A&apos;
+                      when &apos;AC_MGT&apos; then &apos;B&apos;
+                   when &apos;AC_ACCOUNT&apos; then &apos;C&apos;
+                      else &apos;D&apos;
+         end;
+
+dbms_output.put_line(&apos;GRADE: &apos; || v_grade);</code></pre><p>end;<br>使用循环语句打印 1 - 100.（三种方式）</p>
+<p>1).  LOOP … EXIT WHEN … END LOOP<br>declare<br>       –初始化条件<br>       v_i number(3) := 1;<br>begin<br>       loop<br>       –循环体<br>        dbms_output.put_line(v_i);<br>    –循环条件<br>        exit when v_i = 100;<br>    –迭代条件<br>        v_i := v_i + 1;<br>       end loop;<br>end;</p>
+<p>2). WHILE … LOOP … END LOOP<br>declare<br>       –初始化条件<br>       v_i number(3) := 1;<br>begin<br>       –循环条件<br>       while v_i &lt;= 100 loop<br>         –循环体<br>             dbms_output.put_line(v_i);<br>         –迭代条件<br>             v_i := v_i + 1;<br>       end loop;<br>end; </p>
+<p>3).for数字式循环<br>    格式：for 循环计数器 in 下限 .. 上限 loop<br>            要执行的语句；<br>          End loop；<br>begin<br>       for i in 1 .. 100 loop<br>             dbms_output.put_line(i);<br>       end loop;<br>end;</p>
+<ol start="10">
+<li><p>综合使用 if, while 语句, 打印 1 - 100 之间的所有素数<br>(素数: 有且仅用两个正约数的整数, 2, 3, 5, 7, 11, 13, …).<br>declare<br>v_flag number(1):=1;<br>v_i number(3):=2;<br>v_j number(2):=2;<br>begin</p>
+<p>while (v_i&lt;=100) loop</p>
+<pre><code>while v_j &lt;= sqrt(v_i) loop
+      if (mod(v_i,v_j)=0) then v_flag:= 0;
+  end if; 
+  v_j :=v_j +1;
+end loop; </code></pre><p>if(v_flag=1) then dbms_output.put_line(v_i);<br>end if;</p>
+<pre><code>v_flag :=1;
+v_j := 2;
+v_i :=v_i +1;</code></pre><p>end loop;</p>
+</li>
+</ol>
+<p>end;</p>
+<p>(法二)使用for循环实现1-100之间的素数的输出<br>declare<br>  –标记值, 若为 1 则是素数, 否则不是<br>  v_flag number(1) := 0;<br>begin<br>   for i in 2 .. 100 loop</p>
+<pre><code>v_flag := 1;     
+
+for j in 2 .. sqrt(i) loop
+    if i mod j = 0 then
+       v_flag := 0;    
+    end if;        
+end loop;
+
+if v_flag = 1 then
+    dbms_output.put_line(i);
+end if;</code></pre><p>   end loop;<br>end;</p>
+<ol start="11">
+<li><p>使用 goto<br>declare<br>–标记值, 若为 1 则是素数, 否则不是<br>v_flag number(1) := 0;<br>begin<br>for i in 2 .. 100 loop<br>   v_flag := 1;     </p>
+<p>   for j in 2 .. sqrt(i) loop</p>
+<pre><code>if i mod j = 0 then
+   v_flag := 0;
+   goto label; 
+end if;        </code></pre><p>   end loop;</p>
+<p>   &lt;<label>&gt;<br>   if v_flag = 1 then</p>
+<pre><code>dbms_output.put_line(i);</code></pre><p>   end if;</p>
+<p>end loop;<br>end; </p>
+</li>
+</ol>
+<p>11+.打印1——100的自然数，当打印到50时，跳出循环，输出“打印结束”<br>(方法一)<br>begin<br>  for i in 1..100 loop<br>      dbms_output.put_line(i);<br>      if(i = 50) then<br>      goto label;<br>      end if;<br>  end loop;</p>
+<pre><code>&lt;&lt;label&gt;&gt;
+dbms_output.put_line(&apos;打印结束&apos;);</code></pre><p>end;<br>(方法二)<br>begin<br>  for i in 1..100 loop<br>      dbms_output.put_line(i);<br>      if(i mod 50 = 0) then dbms_output.put_line(‘打印结束’);<br>      exit;<br>      end if;<br>  end loop;<br>end;<br>        游标<br>一、 游标概念<br>1 处理显式游标<br>2 处理隐式游标<br>3 关于 NO_DATA_FOUND 和 %NOTFOUND的区别<br>4  使用游标更新和删除数据<br>二、 游标变量<br>1  声明游标变量<br>2  游标变量操作</p>
+<p>一、游标的概念<br>在PL/SQL块中执行SELECT、INSERT、DELETE和UPDATE语句时，ORACLE会在内存中为其分配上下文区（Context Area），即缓冲区。游标是指向该区的一个指针，或是命名一个工作区（Work Area），或是一种结构化数据类型。它为应用等量齐观提供了一种对具有多行数据查询结果集中的每一行数据分别进行单独处理的方法，是设计嵌入式SQL语句的应用程序的常用编程方式。<br> 在每个用户会话中，可以同时打开多个游标，其数量由数据库初始化参数文件中的OPEN_CURSORS参数定义。<br>对于不同的SQL语句，游标的使用情况不同：</p>
+<ol>
+<li>显式游标处理<br>显式游标处理需四个 PL/SQL步骤:<br>定义/声明游标：就是定义一个游标名，以及与其相对应的SELECT 语句。<br>格式：<br> CURSOR cursor_name[(parameter[, parameter]…)] <pre><code>[RETURN datatype]</code></pre> IS <pre><code>select_statement;                定义的游标不能有INTO 子句。</code></pre>游标参数只能为输入参数，其格式为：<br>parameter_name [IN] datatype [{:= | DEFAULT} expression]<br>在指定数据类型时，不能使用长度约束。如NUMBER(4),CHAR(10) 等都是错误的。<br>[RETURN datatype]是可选的，表示游标返回数据的数据。如果选择，则应该严格与select_statement中的选择列表在次序和数据类型上匹配。一般是记录数据类型或带“%ROWTYPE”的数据。</li>
+</ol>
+<p>打开游标：就是执行游标所对应的SELECT 语句，将其查询结果放入工作区，并且指针指向工作区的首部，标识游标结果集合。如果游标查询语句中带有FOR UPDATE选项，OPEN 语句还将锁定数据库表中游标结果集合对应的数据行。<br>格式：<br>    OPEN cursor_name[([parameter =&gt;] value[, [parameter =&gt;] value]…)];<br>在向游标传递参数时，可以使用与函数参数相同的传值方法，即位置表示法和名称表示法。PL/SQL 程序不能用OPEN 语句重复打开一个游标。<br>提取游标数据：就是检索结果集合中的数据行，放入指定的输出变量中。<br>格式：<br>    FETCH cursor_name INTO {variable_list | record_variable };<br>执行FETCH语句时，每次返回一个数据行，然后自动将游标移动指向下一个数据行。当检索到最后一行数据时，如果再次执行FETCH语句，将操作失败，并将游标属性%NOTFOUND置为TRUE。所以每次执行完FETCH语句后，检查游标属性%NOTFOUND就可以判断FETCH语句是否执行成功并返回一个数据行，以便确定是否给对应的变量赋了值。<br>对该记录进行处理；<br>继续处理，直到活动集合中没有记录；<br>关闭游标：当提取和处理完游标结果集合数据后，应及时关闭游标，以释放该游标所占用的系统资源，并使该游标的工作区变成无效，不能再使用FETCH 语句取其中数据。关闭后的游标可以使用OPEN 语句重新打开。<br>格式：<br>CLOSE cursor_name;<br>例1.<br>DECLARE<br>   CURSOR c_cursor<br>   IS SELECT first_name || last_name, Salary<br>   FROM EMPLOYEES<br>   WHERE rownum&lt;11;<br>   v_ename  EMPLOYEES.first_name%TYPE;<br>   v_sal    EMPLOYEES.Salary%TYPE;<br>BEGIN<br>  OPEN c_cursor;<br>  FETCH c_cursor INTO v_ename, v_sal;<br>  WHILE c_cursor%FOUND LOOP<br>     DBMS_OUTPUT.PUT_LINE(v_ename||’—‘||to_char(v_sal) );<br>     FETCH c_cursor INTO v_ename, v_sal;<br>  END LOOP;<br>  CLOSE c_cursor;<br>END;<br> 例2. 游标参数的传递方法。<br>DECLARE<br>  DeptRec    DEPARTMENTS%ROWTYPE;<br>  Dept_name  DEPARTMENTS.DEPARTMENT_NAME%TYPE;<br>  Dept_loc   DEPARTMENTS.LOCATION_ID%TYPE;<br>  CURSOR c1 IS<br>  SELECT DEPARTMENT_NAME, LOCATION_ID FROM DEPARTMENTS<br>  WHERE DEPARTMENT_ID &lt;= 30;</p>
+<p>  CURSOR c2(dept_no NUMBER DEFAULT 10) IS<br>    SELECT DEPARTMENT_NAME, LOCATION_ID FROM DEPARTMENTS<br>    WHERE DEPARTMENT_ID &lt;= dept_no;<br>  CURSOR c3(dept_no NUMBER DEFAULT 10) IS<br>    SELECT * FROM DEPARTMENTS<br>    WHERE DEPARTMENTS.DEPARTMENT_ID &lt;=dept_no;<br>BEGIN<br>  OPEN c1;<br>  LOOP<br>    FETCH c1 INTO dept_name, dept_loc;<br>    EXIT WHEN c1%NOTFOUND;<br>        DBMS_OUTPUT.PUT_LINE(dept_name||’—‘||dept_loc);<br>    END LOOP;<br>    CLOSE c1;</p>
+<pre><code>OPEN c2;
+LOOP
+    FETCH c2 INTO dept_name, dept_loc;
+    EXIT WHEN c2%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(dept_name||&apos;---&apos;||dept_loc);
+END LOOP;
+CLOSE c2;
+
+OPEN c3(dept_no =&gt;20);
+LOOP
+    FETCH c3 INTO deptrec;
+    EXIT WHEN c3%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(deptrec.DEPARTMENT_ID||&apos;---&apos;||deptrec.DEPARTMENT_NAME||&apos;---&apos;||deptrec.LOCATION_ID);
+END LOOP;
+CLOSE c3;</code></pre><p>END;</p>
+<p>2.游标属性<br> Cursor_name%FOUND     布尔型属性，当最近一次提取游标操作FETCH成功则为 TRUE,否则为FALSE；<br> Cursor_name%NOTFOUND   布尔型属性，与%FOUND相反；<br> Cursor_name%ISOPEN     布尔型属性，当游标已打开时返回 TRUE；<br> Cursor_name%ROWCOUNT   数字型属性，返回已从游标中读取的记录数。<br>例3：给工资低于1200 的员工增加工资50。</p>
+<p>DECLARE<br>   v_empno  EMPLOYEES.EMPLOYEE_ID%TYPE;<br>   v_sal      EMPLOYEES.Salary%TYPE;<br>   CURSOR c_cursor IS SELECT EMPLOYEE_ID, Salary FROM EMPLOYEES;<br>BEGIN<br>   OPEN c_cursor;<br>   LOOP<br>      FETCH c_cursor INTO v_empno, v_sal;<br>      EXIT WHEN c_cursor%NOTFOUND;<br>      IF v_sal&lt;=1200 THEN<br>            UPDATE EMPLOYEES SET Salary=Salary+50 WHERE EMPLOYEE_ID=v_empno;<br>            DBMS_OUTPUT.PUT_LINE(‘编码为’||v_empno||’工资已更新!’);<br>      END IF;<br>   DBMS_OUTPUT.PUT_LINE(‘记录数:’|| c_cursor %ROWCOUNT);<br>   END LOOP;<br>   CLOSE c_cursor;<br>END; </p>
+<p>例4：没有参数且没有返回值的游标。</p>
+<p>DECLARE<br>   v_f_name employees.first_name%TYPE;<br>   v_j_id   employees.job_id%TYPE;<br>   CURSOR c1       –声明游标,没有参数没有返回值<br>   IS<br>      SELECT first_name, job_id FROM employees<br>      WHERE department_id = 20;<br>BEGIN<br>   OPEN c1;        –打开游标<br>   LOOP<br>      FETCH c1 INTO v_f_name, v_j_id;    –提取游标<br>      IF c1%FOUND THEN<br>         DBMS_OUTPUT.PUT_LINE(v_f_name||’的岗位是’||v_j_id);<br>      ELSE<br>         DBMS_OUTPUT.PUT_LINE(‘已经处理完结果集了’);<br>         EXIT;<br>      END IF;<br>   END LOOP;<br>   CLOSE c1;   –关闭游标<br>END;</p>
+<p>例5：有参数且没有返回值的游标。</p>
+<p>DECLARE<br>   v_f_name employees.first_name%TYPE;<br>   v_h_date employees.hire_date%TYPE;<br>   CURSOR c2(dept_id NUMBER, j_id VARCHAR2) –声明游标,有参数没有返回值<br>   IS<br>      SELECT first_name, hire_date FROM employees<br>      WHERE department_id = dept_id AND job_id = j_id;<br>BEGIN<br>   OPEN c2(90, ‘AD_VP’);  –打开游标,传递参数值<br>   LOOP<br>      FETCH c2 INTO v_f_name, v_h_date;    –提取游标<br>      IF c2%FOUND THEN<br>         DBMS_OUTPUT.PUT_LINE(v_f_name||’的雇佣日期是’||v_h_date);<br>      ELSE<br>         DBMS_OUTPUT.PUT_LINE(‘已经处理完结果集了’);<br>         EXIT;<br>      END IF;<br>   END LOOP;<br>   CLOSE c2;   –关闭游标<br>END;</p>
+<p>例6：有参数且有返回值的游标。</p>
+<p>DECLARE<br>   TYPE emp_record_type IS RECORD(<br>        f_name   employees.first_name%TYPE,<br>        h_date   employees.hire_date%TYPE);<br>   v_emp_record EMP_RECORD_TYPE;</p>
+<p>   CURSOR c3(dept_id NUMBER, j_id VARCHAR2) –声明游标,有参数有返回值<br>          RETURN EMP_RECORD_TYPE<br>   IS<br>      SELECT first_name, hire_date FROM employees<br>      WHERE department_id = dept_id AND job_id = j_id;<br>BEGIN<br>   OPEN c3(j_id =&gt; ‘AD_VP’, dept_id =&gt; 90);  –打开游标,传递参数值<br>   LOOP<br>      FETCH c3 INTO v_emp_record;    –提取游标<br>      IF c3%FOUND THEN<br>         DBMS_OUTPUT.PUT_LINE(v_emp_record.f_name||’的雇佣日期是’<br>                            ||v_emp_record.h_date);<br>      ELSE<br>         DBMS_OUTPUT.PUT_LINE(‘已经处理完结果集了’);<br>         EXIT;<br>      END IF;<br>   END LOOP;<br>   CLOSE c3;   –关闭游标<br>END;</p>
+<p>例7：基于游标定义记录变量。</p>
+<p>DECLARE<br>   CURSOR c4(dept_id NUMBER, j_id VARCHAR2) –声明游标,有参数没有返回值<br>   IS<br>      SELECT first_name f_name, hire_date FROM employees<br>      WHERE department_id = dept_id AND job_id = j_id;<br>    –基于游标定义记录变量，比声明记录类型变量要方便，不容易出错<br>    v_emp_record c4%ROWTYPE;<br>BEGIN<br>   OPEN c4(90, ‘AD_VP’);  –打开游标,传递参数值<br>   LOOP<br>      FETCH c4 INTO v_emp_record;    –提取游标<br>      IF c4%FOUND THEN<br>         DBMS_OUTPUT.PUT_LINE(v_emp_record.f_name||’的雇佣日期是’<br>                            ||v_emp_record.hire_date);<br>      ELSE<br>         DBMS_OUTPUT.PUT_LINE(‘已经处理完结果集了’);<br>         EXIT;<br>      END IF;<br>   END LOOP;<br>   CLOSE c4;   –关闭游标<br>END;</p>
+<ol start="3">
+<li><p>游标的FOR循环<br> PL/SQL语言提供了游标FOR循环语句，自动执行游标的OPEN、FETCH、CLOSE语句和循环语句的功能；当进入循环时，游标FOR循环语句自动打开游标，并提取第一行游标数据，当程序处理完当前所提取的数据而进入下一次循环时，游标FOR循环语句自动提取下一行数据供程序处理，当提取完结果集合中的所有数据行后结束循环，并自动关闭游标。<br>格式：</p>
+<p>FOR index_variable IN cursor_name[(value[, value]…)] LOOP<br> – 游标数据处理代码<br>END LOOP;</p>
+</li>
+</ol>
+<p>其中：<br>index_variable为游标FOR 循环语句隐含声明的索引变量，该变量为记录变量，其结构与游标查询语句返回的结构集合的结构相同。在程序中可以通过引用该索引记录变量元素来读取所提取的游标数据，index_variable中各元素的名称与游标查询语句选择列表中所制定的列名相同。如果在游标查询语句的选择列表中存在计算列，则必须为这些计算列指定别名后才能通过游标FOR 循环语句中的索引变量来访问这些列数据。<br>注：不要在程序中对游标进行人工操作；不要在程序中定义用于控制FOR循环的记录。</p>
+<p>例8：<br>DECLARE<br>   CURSOR c_sal IS SELECT employee_id, first_name || last_name ename, salary<br>   FROM employees ;<br>BEGIN<br>   –隐含打开游标<br>   FOR v_sal IN c_sal LOOP<br>   –隐含执行一个FETCH语句<br>      DBMS_OUTPUT.PUT_LINE(to_char(v_sal.employee_id)||’—‘|| v_sal.ename||’—‘||to_char(v_sal.salary)) ;<br>   –隐含监测c_sal%NOTFOUND<br>   END LOOP;<br>–隐含关闭游标<br>END;</p>
+<p>例9：当所声明的游标带有参数时，通过游标FOR 循环语句为游标传递参数。</p>
+<p>DECLARE<br>  CURSOR c_cursor(dept_no NUMBER DEFAULT 10)<br>  IS<br>    SELECT department_name, location_id FROM departments WHERE department_id &lt;= dept_no;<br>BEGIN<br>    DBMS_OUTPUT.PUT_LINE(‘当dept_no参数值为30：’);<br>    FOR c1_rec IN c_cursor(30) LOOP        DBMS_OUTPUT.PUT_LINE(c1_rec.department_name||’—‘||c1_rec.location_id);<br>    END LOOP;<br>    DBMS_OUTPUT.PUT_LINE(CHR(10)||’使用默认的dept_no参数值10：’);<br>    FOR c1_rec IN c_cursor LOOP        DBMS_OUTPUT.PUT_LINE(c1_rec.department_name||’—‘||c1_rec.location_id);<br>    END LOOP;<br>END;</p>
+<p>例10：PL/SQL还允许在游标FOR循环语句中使用子查询来实现游标的功能。</p>
+<p>BEGIN<br>    FOR c1_rec IN(SELECT department_name, location_id FROM departments) LOOP        DBMS_OUTPUT.PUT_LINE(c1_rec.department_name||’—‘||c1_rec.location_id);<br>    END LOOP;<br>END;</p>
+<p>2 处理隐式游标<br>显式游标主要是用于对查询语句的处理，尤其是在查询结果为多条记录的情况下；而对于非查询语句，如修改、删除操作，则由ORACLE 系统自动地为这些操作设置游标并创建其工作区，这些由系统隐含创建的游标称为隐式游标，隐式游标的名字为SQL，这是由ORACLE 系统定义的。对于隐式游标的操作，如定义、打开、取值及关闭操作，都由ORACLE 系统自动地完成，无需用户进行处理。用户只能通过隐式游标的相关属性，来完成相应的操作。在隐式游标的工作区中，所存放的数据是与用户自定义的显示游标无关的、最新处理的一条SQL 语句所包含的数据。<br>格式调用为： SQL%</p>
+<p>注：INSERT, UPDATE, DELETE, SELECT 语句中不必明确定义游标。</p>
+<p>隐式游标属性<br>属性    值    SELECT    INSERT    UPDATE    DELETE<br>SQL%ISOPEN         FALSE    FALSE    FALSE    FALSE<br>SQL%FOUND    TRUE    有结果         成功    成功<br>SQL%FOUND    FALSE    没结果         失败    失败<br>SQL%NOTFUOND    TRUE    没结果         失败    失败<br>SQL%NOTFOUND    FALSE    有结果         成功    失败<br>SQL%ROWCOUNT         返回行数，只为1    插入的行数    修改的行数    删除的行数</p>
+<p>例11: 删除EMPLOYEES表中某部门的所有员工，如果该部门中已没有员工，则在DEPARTMENT表中删除该部门。</p>
+<p>DECLARE<br>    V_deptno department_id%TYPE :=&p_deptno;<br>BEGIN<br>    DELETE FROM employees WHERE department_id=v_deptno;<br>    IF SQL%NOTFOUND THEN<br>        DELETE FROM departments WHERE department_id=v_deptno;<br>    END IF;<br>END;</p>
+<p>例12: 通过隐式游标SQL的%ROWCOUNT属性来了解修改了多少行。</p>
+<p>DECLARE<br>   v_rows NUMBER;<br>BEGIN<br>–更新数据<br>   UPDATE employees SET salary = 30000<br>   WHERE department_id = 90 AND job_id = ‘AD_VP’;<br>–获取默认游标的属性值<br>   v_rows := SQL%ROWCOUNT;<br>   DBMS_OUTPUT.PUT_LINE(‘更新了’||v_rows||’个雇员的工资’);<br>–回退更新，以便使数据库的数据保持原样<br>   ROLLBACK;<br>END;</p>
+<p>3 关于 NO_DATA_FOUND 和 %NOTFOUND的区别<br>SELECT … INTO 语句触发 NO_DATA_FOUND；<br>当一个显式游标的WHERE子句未找到时触发%NOTFOUND；<br>当UPDATE或DELETE 语句的WHERE 子句未找到时触发 SQL%NOTFOUND；在提取循环中要用 %NOTFOUND 或%FOUND 来确定循环的退出条件，不要用 NO_DATA_FOUND.4.1.4  使用游标更新和删除数据<br>游标修改和删除操作是指在游标定位下，修改或删除表中指定的数据行。这时，要求游标查询语句中必须使用FOR UPDATE选项，以便在打开游标时锁定游标结果集合在表中对应数据行的所有列和部分列。<br>为了对正在处理(查询)的行不被另外的用户改动，ORACLE 提供一个 FOR UPDATE 子句来对所选择的行进行锁住。该需求迫使ORACLE锁定游标结果集合的行，可以防止其他事务处理更新或删除相同的行，直到您的事务处理提交或回退为止。<br>语法：</p>
+<p>SELECT column_list FROM table_list FOR UPDATE [OF column[, column]…] [NOWAIT]</p>
+<pre><code>如果另一个会话已对活动集中的行加了锁，那么SELECT FOR UPDATE操作一直等待到其它的会话释放这些锁后才继续自己的操作，对于这种情况，当加上NOWAIT子句时，如果这些行真的被另一个会话锁定，则OPEN立即返回并给出：</code></pre><p>ORA-0054 ：resource busy  and  acquire with nowait specified.</p>
+<p>如果使用 FOR UPDATE 声明游标，则可在DELETE和UPDATE 语句中使用<br>WHERE CURRENT OF cursor_name子句，修改或删除游标结果集合当前行对应的数据库表中的数据行。</p>
+<p>例13：从EMPLOYEES表中查询某部门的员工情况，将其工资最低定为 1500；</p>
+<p>DECLARE<br>    V_deptno employees.department_id%TYPE :=&p_deptno;<br>    CURSOR emp_cursor<br>  IS<br>  SELECT employees.employee_id, employees.salary<br>    FROM employees WHERE employees.department_id=v_deptno<br>  FOR UPDATE NOWAIT;<br>BEGIN<br>    FOR emp_record IN emp_cursor LOOP<br>    IF emp_record.salary &lt; 1500 THEN<br>        UPDATE employees SET salary=1500<br>    WHERE CURRENT OF emp_cursor;<br>    END IF;<br>    END LOOP;<br>–    COMMIT;<br>END; </p>
+<p>例14：将EMPLOYEES表中部门编码为90、岗位为AD_VP的雇员的工资都更新为2000元；</p>
+<p>DECLARE<br>   v_emp_record employees%ROWTYPE;<br>   CURSOR c1<br>   IS<br>      SELECT * FROM employees FOR UPDATE;<br>BEGIN<br>   OPEN c1;<br>   LOOP<br>      FETCH c1 INTO v_emp_record;<br>      EXIT WHEN c1%NOTFOUND;<br>      IF v_emp_record.department_id = 90 AND<br>         v_emp_record.job_id = ‘AD_VP’<br>      THEN<br>         UPDATE employees SET salary = 20000<br>         WHERE CURRENT OF c1;  –更新当前游标行对应的数据行<br>      END IF;<br>   END LOOP;<br>   COMMIT;   –提交已经修改的数据<br>   CLOSE c1;<br>END;</p>
+<p>4.2 游标变量<br>与游标一样，游标变量也是一个指向多行查询结果集合中当前数据行的指针。但与游标不同的是，游标变量是动态的，而游标是静态的。游标只能与指定的查询相连，即固定指向一个查询的内存处理区域，而游标变量则可与不同的查询语句相连，它可以指向不同查询语句的内存处理区域（但不能同时指向多个内存处理区域，在某一时刻只能与一个查询语句相连），只要这些查询语句的返回类型兼容即可。</p>
+<p>4.2.1  声明游标变量<br>游标变量为一个指针，它属于参照类型，所以在声明游标变量类型之前必须先定义游标变量类型。在PL/SQL中，可以在块、子程序和包的声明区域内定义游标变量类型。<br>语法格式为：</p>
+<p>TYPE ref_type_name IS REF CURSOR<br> [ RETURN return_type];</p>
+<p>其中：ref_type_name为新定义的游标变量类型名称；<br>  return_type 为游标变量的返回值类型，它必须为记录变量。</p>
+<p>在定义游标变量类型时，可以采用强类型定义和弱类型定义两种。强类型定义必须指定游标变量的返回值类型，而弱类型定义则不说明返回值类型。<br>声明一个游标变量的两个步骤：<br>步骤一：定义一个REF CURSOU数据类型，如：<br>TYPE ref_cursor_type IS REF CURSOR;<br>步骤二：声明一个该数据类型的游标变量，如：<br>cv_ref REF_CURSOR_TYPE;</p>
+<p>例：创建两个强类型定义游标变量和一个弱类型游标变量：</p>
+<p>DECLARE<br>    TYPE deptrecord IS RECORD(<br>        Deptno departments.department_id%TYPE,<br>        Dname departments.department_name%TYPE,<br>        Loc departments.location_id%TYPE<br>    );<br>    TYPE deptcurtype IS REF CURSOR RETURN departments%ROWTYPE;<br>    TYPE deptcurtyp1 IS REF CURSOR RETURN deptrecord;<br>    TYPE curtype IS REF CURSOR;<br>    Dept_c1 deptcurtype;<br>    Dept_c2 deptcurtyp1;<br>    Cv curtype;</p>
+<p>4.2.2  游标变量操作<br>与游标一样，游标变量操作也包括打开、提取和关闭三个步骤。<br>1． 打开游标变量<br>打开游标变量时使用的是OPEN…FOR 语句。格式为：</p>
+<p>OPEN {cursor_variable_name | :host_cursor_variable_name}<br>FOR select_statement;</p>
+<p>其中：cursor_variable_name为游标变量，host_cursor_variable_name为PL/SQL主机环境（如OCI: ORACLE Call Interface，Pro*c 程序等）中声明的游标变量。<br>OPEN…FOR 语句可以在关闭当前的游标变量之前重新打开游标变量，而不会导致CURSOR_ALREAD_OPEN异常错误。新打开游标变量时，前一个查询的内存处理区将被释放。</p>
+<p>2． 提取游标变量数据<br>使用FETCH语句提取游标变量结果集合中的数据。格式为：</p>
+<p>FETCH {cursor_variable_name | :host_cursor_variable_name}<br>INTO {variable [, variable]…| record_variable};</p>
+<p>其中：cursor_variable_name和host_cursor_variable_name分别为游标变量和宿主游标变量名称；variable和record_variable分别为普通变量和记录变量名称。</p>
+<p>3． 关闭游标变量<br>CLOSE语句关闭游标变量，格式为：</p>
+<p>CLOSE {cursor_variable_name | :host_cursor_variable_name}</p>
+<p>其中：cursor_variable_name和host_cursor_variable_name分别为游标变量和宿主游标变量名称，如果应用程序试图关闭一个未打开的游标变量，则将导致INVALID_CURSOR异常错误。</p>
+<p>例15：强类型参照游标变量类型</p>
+<p>DECLARE<br>    TYPE emp_job_rec IS RECORD(<br>        Employee_id employees.employee_id%TYPE,<br>        Employee_name employees.first_name%TYPE,<br>        Job_title employees.job_id%TYPE<br>    );<br>    TYPE emp_job_refcur_type IS REF CURSOR RETURN emp_job_rec;<br>    Emp_refcur emp_job_refcur_type ;<br>    Emp_job emp_job_rec;<br>BEGIN<br>    OPEN emp_refcur FOR<br>    SELECT employees.employee_id, employees.first_name||employees.last_name, employees.job_id<br>  FROM employees<br>  ORDER BY employees.department_id;</p>
+<pre><code>FETCH emp_refcur INTO emp_job;
+WHILE emp_refcur%FOUND LOOP
+   DBMS_OUTPUT.PUT_LINE(emp_job.employee_id||&apos;: &apos;||emp_job.employee_name||&apos; is a &apos;||emp_job.job_title);
+FETCH emp_refcur INTO emp_job;
+END LOOP;</code></pre><p>END;</p>
+<p>例16：弱类型参照游标变量类型</p>
+<p>PROMPT<br>PROMPT ‘What table would you like to see?’<br>ACCEPT tab PROMPT ‘(D)epartment, or (E)mployees:’</p>
+<p>DECLARE<br>    Type refcur_t IS REF CURSOR;<br>    Refcur refcur_t;<br>    TYPE sample_rec_type IS RECORD (<br>        Id number,<br>        Description VARCHAR2 (30)<br>    );<br>    sample sample_rec_type;<br>    selection varchar2(1) := UPPER (SUBSTR (‘&amp;tab’, 1, 1));<br>BEGIN<br>    IF selection=’D’ THEN<br>        OPEN refcur FOR<br>    SELECT departments.department_id, departments.department_name FROM departments;<br>        DBMS_OUTPUT.PUT_LINE(‘Department data’);<br>    ELSIF selection=’E’ THEN<br>        OPEN refcur FOR<br>    SELECT employees.employee_id, employees.first_name||’ is a ‘||employees.job_id FROM employees;<br>        DBMS_OUTPUT.PUT_LINE(‘Employee data’);<br>    ELSE<br>        DBMS_OUTPUT.PUT_LINE(‘Please enter ‘’D’’ or ‘’E’’’);<br>        RETURN;<br>    END IF;<br>    DBMS_OUTPUT.PUT_LINE(‘———————-‘);<br>    FETCH refcur INTO sample;<br>    WHILE refcur%FOUND LOOP<br>        DBMS_OUTPUT.PUT_LINE(sample.id||’: ‘||sample.description);<br>        FETCH refcur INTO sample;<br>    END LOOP;<br>    CLOSE refcur;<br>END;</p>
+<p>例17：使用游标变量（没有RETURN子句）</p>
+<p>DECLARE<br>–定义一个游标数据类型<br>   TYPE emp_cursor_type IS REF CURSOR;<br>–声明一个游标变量<br>   c1 EMP_CURSOR_TYPE;<br>–声明两个记录变量<br>   v_emp_record employees%ROWTYPE;<br>   v_reg_record regions%ROWTYPE;</p>
+<p>BEGIN<br>   OPEN c1 FOR SELECT * FROM employees WHERE department_id = 20;<br>   LOOP<br>      FETCH c1 INTO v_emp_record;<br>      EXIT WHEN c1%NOTFOUND;<br>      DBMS_OUTPUT.PUT_LINE(v_emp_record.first_name||’的雇佣日期是’<br>                            ||v_emp_record.hire_date);<br>   END LOOP;<br>–将同一个游标变量对应到另一个SELECT语句<br>   OPEN c1 FOR SELECT * FROM regions WHERE region_id IN（1，2）;<br>   LOOP<br>      FETCH c1 INTO v_reg_record;<br>      EXIT WHEN c1%NOTFOUND;<br>      DBMS_OUTPUT.PUT_LINE(v_reg_record.region_id||’表示’<br>                            ||v_reg_record.region_name);<br>   END LOOP;<br>   CLOSE c1;<br>END;<br>存储过程及函数<br>一、    概念：<br>存储过程及函数：保存在数据库中一段有名字的代码的集合，先编译后运行，存储过程没有返回值，存储函数有返回值。<br>创建储存过程的语法：<br>create [or replace] PROCEDURE 过程名(参数列表)<br>AS<br>        PLSQL子程序体；<br>end 过程名;</p>
+<p>–第一个存储过程：<br>create or replace procedure hello_pro<br>as<br>    –声明变量<br>begin<br>    –执行体<br>    dbms_output.put_line(‘Hello’);<br>end;</p>
+<p>执行存储过程：<br>1)exec hello_pro;<br>2)编写一段plsql程序来调用<br>begin<br>    hello_pro;<br>end;</p>
+<p>查看存储过程：user_procedures,user_source<br>删除存储过程：drop procedure hello_pro;</p>
+<p>–查看20号部门的信息<br>create or replace procedure query_emp_pro<br>as<br>    –声明一个光标类型<br>    cursor mycursor is select * from emp10 where deptno=20;<br>    –声明上面光标类型的变量<br>    emp_rec mycursor%rowtype;<br>begin<br>    –打开光标<br>    open mycursor;<br>    fetch mycursor into emp_rec;<br>    while mycursor%found loop<br>        dbms_output.put_line(mycursor%rowcount||’:’||emp_rec.ename||’:’||emp_rec.job||’:’||emp_rec.sal||’:’||        emp_rec.deptno);<br>        –取出光标某一行数据<br>        fetch mycursor into emp_rec;<br>    end loop;<br>    –用完之后，记得要关闭光标<br>    close mycursor;<br>end;</p>
+<p>–存储函数<br>创建储存函数的语法：<br>create [or replace] function 函数名(参数列表) return 返回类型<br>AS<br>        PLSQL子程序体；<br>    return 返回类型值<br>end 过程名;</p>
+<p>–写一个函数，从控制输入一个名字，如果是stone，返回admin；否则返回guest<br>create or replace function getRole(name in varchar2) return varchar2<br>as<br>begin<br>    if name=’stone’ then<br>        return ‘admin’;<br>    else<br>        return ‘guest’;<br>    end if;<br>end;</p>
+<p>调用函数：<br>begin<br>    dbms_output.put_line(‘你的角色是:’||getRole(‘&amp;name’));<br>end;</p>
+<p>存储过程，存储函数参数模型：<br>1)in：plsql内部使用<br>2)out：参数提供给外部使用，即调用者使用<br>3)in out：<br>–测试参数模型<br>create or replace procedure pram_pro(param_in in varchar2,param_out out varchar2,param_in_out in out number)<br>as<br>begin<br>    dbms_output.put_line(‘param_in==&gt;’||param_in);<br>    dbms_output.put_line(‘param_out==&gt;’||param_out);<br>    dbms_output.put_line(‘param_in_out==&gt;’||param_in_out);<br>end;</p>
+<p>如果参数有out，则调用不能用 exec(..,..,..)，要使用一段plsql语句来调用<br>declare<br>    param_in varchar2(20):=’param_in’;<br>    param_out varchar2(20):=’param_out’;<br>    param_in_out number:=1000;<br>begin<br>    pram_pro(param_in,param_out,param_in_out);<br>end;</p>
+<p>什么存储过程，什么时候用函数？<br>如果返回一个值，则用函数；如果返回多个值，则用存储过程</p>
+<p>包：由两部分组成，包头(类似于java中的接口)和包体(类似于该接口对应的实现类)<br>声明包头语法：<br>create or replace package 包名<br>as<br>    –声明变量<br>    –声明储存过程<br>    –声明函数<br>end;<br>声明包体语法：<br>create or replace package body 包名<br>as<br>    –储存过程实现<br>    –存储函数实现<br>end;</p>
+<p>–测试第一个包<br>create or replace package first_package<br>as<br>    procedure first_pro;<br>    function first_fun return varchar2;<br>end;<br>–创建包体<br>create or replace package body first_package<br>as<br>    procedure first_pro<br>    as<br>    begin<br>        dbms_output.put_line(‘first_pro’);<br>    end;<br>    function first_fun return varchar2<br>    as<br>    begin<br>        return ‘abc’;<br>    end;<br>end;<br>触发器：当在一张表作insert,delete,update操作时，作出一些响应，触发器类型：<br>1)表级别：针对一张表<br>2)行级别：针对每一条记录<br>触发器语法：<br>   CREATE  [or REPLACE] TRIGGER  触发器名<br>   {BEFORE | AFTER}<br>   {DELETE | INSERT | UPDATE [OF 列名]}<br>   ON  表名<br>   [FOR EACH ROW [WHEN(条件) ] ]<br>   PLSQL 块</p>
+<p>create or replace trigger hello_trigger<br>before delete or insert<br>on emp10<br>for each row<br>declare<br>    –声明变量<br>begin<br>    dbms_output.put_line(‘hello’);<br>end;</p>
+<p>–在非工作时间不能删除或者插入记录，正常工作时间是周一到周五9:00-18:00<br>create or replace trigger work_trigger<br>before delete or insert or update<br>on emp10<br>for each row<br>declare<br>    day varchar2(20):=to_char(sysdate,’day’);<br>    hour number:=to_number(to_char(sysdate,’hh24’));<br>begin<br>    if day=’星期六’ or day=’星期日’ then<br>        raise_application_error(‘-20001’,’周末非工作时间’);<br>    elsif hour&lt;=9 or hour&gt;=18 then<br>        raise_application_error(‘-20001’,’9:00-18:00才是工作时间’);<br>    end if;<br>end;</p>
+<p>–写一个触发器，更新emp10的员工工资，如果新的工资小于原来的工资，则不能更新<br>–:old,更新之前的工作;:new更新之后的工资<br>/*<br>    if :old.sal&gt;:new.sal then<br>        –不让更新<br>    end if;<br>*/<br>create or replace trigger update_trigger<br>before update<br>on emp10<br>for each row<br>declare<br>begin</p>
+<pre><code>if :old.sal&gt;:new.sal then
+    raise_application_error(&apos;-20001&apos;,&apos;更新的工资小于原来的工资，更新不成功&apos;);
+end if;</code></pre><p>end;</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/">plaql基础</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 老高 的个人博客">老高</a></p>
+        <p><span>发布时间:</span>2020年05月18日 - 20时42分</p>
+        <p><span>最后更新:</span>2020年05月18日 - 20时44分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/" title="plaql基础">https://sanye123.github.io/2020/05/18/plaql%E5%9F%BA%E7%A1%80/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://sanye123.github.io/2020/05/18/plaql%E5%9F%BA%E7%A1%80/　　作者: 老高" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          微信公众号
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/2020/05/18/ssm/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ssm</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" title="上一篇: 微信公众号">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2020/05/18/ssm/" title="下一篇: ssm">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/">微信公众号</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/">plaql基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/ssm/">ssm</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2020 老高
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
