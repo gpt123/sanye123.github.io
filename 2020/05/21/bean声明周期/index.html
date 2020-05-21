@@ -7,19 +7,21 @@
   
   
   
-  <title>ssm | 老高的小窝</title>
+  <title>bean声明周期 | 老高的小窝</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="什么是springmvc?    Springmvc是一个基于mvc的web框架，它是spring框架的一个模块，两者无需通过中间整合进行整合。 Springmvc框架的执行步骤    第一步：用户发起请求到前端控制器（DispatcherServlet）    第二步：前端控制器请求处理器映射器查找Handler    第三步：处理器映射器向前端控制器返回Handler    第四步：前端控制器">
+  <meta name="description" content="初始化过程1 调用beanFactoryPostProcessor 的无参构造函数 构建beanFactoryPostProcessor  调用 psotProcessorBeanfactory(), 2调用beanPostProcessor 无参构造函数 3调用InstantiationAwareBeanPostProcessorAdapter无参构造函数 构建InstantiationAwar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssm">
-<meta property="og:url" content="https://sanye123.github.io/2020/05/18/ssm/index.html">
+<meta property="og:title" content="bean声明周期">
+<meta property="og:url" content="https://sanye123.github.io/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="老高的小窝">
-<meta property="og:description" content="什么是springmvc?    Springmvc是一个基于mvc的web框架，它是spring框架的一个模块，两者无需通过中间整合进行整合。 Springmvc框架的执行步骤    第一步：用户发起请求到前端控制器（DispatcherServlet）    第二步：前端控制器请求处理器映射器查找Handler    第三步：处理器映射器向前端控制器返回Handler    第四步：前端控制器">
+<meta property="og:description" content="初始化过程1 调用beanFactoryPostProcessor 的无参构造函数 构建beanFactoryPostProcessor  调用 psotProcessorBeanfactory(), 2调用beanPostProcessor 无参构造函数 3调用InstantiationAwareBeanPostProcessorAdapter无参构造函数 构建InstantiationAwar">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-18T12:16:19.404Z">
-<meta property="article:modified_time" content="2020-05-18T12:39:58.460Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200521214408240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTU4MjQ2,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-05-21T13:46:42.473Z">
+<meta property="article:modified_time" content="2020-05-21T13:52:24.997Z">
 <meta property="article:author" content="老高">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200521214408240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTU4MjQ2,size_16,color_FFFFFF,t_70#pic_center">
   
     <link rel="alternative" href="/atom.xml" title="老高的小窝" type="application/atom+xml">
   
@@ -244,11 +246,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-ssm" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-bean声明周期" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2020/05/18/ssm/" class="article-date">
-      <time datetime="2020-05-18T12:16:19.404Z" itemprop="datePublished">2020-05-18</time>
+      <a  href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/" class="article-date">
+      <time datetime="2020-05-21T13:46:42.473Z" itemprop="datePublished">2020-05-21</time>
 </a>
 
     </div>
@@ -262,7 +264,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ssm
+      bean声明周期
     </h1>
   
 
@@ -280,24 +282,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>什么是springmvc?<br>    Springmvc是一个基于mvc的web框架，它是spring框架的一个模块，两者无需通过中间整合进行整合。</p>
-<p>Springmvc框架的执行步骤<br>    第一步：用户发起请求到前端控制器（DispatcherServlet）<br>    第二步：前端控制器请求处理器映射器查找Handler<br>    第三步：处理器映射器向前端控制器返回Handler<br>    第四步：前端控制器调用处理器适配器去执行Handler<br>    第五步：处理器适配器去执行Handler<br>    <a id="more"></a><br>    第六步：Handler执行完成给适配器返回ModelAndView<br>    第七步：处理器适配器向前端控制器返回ModelAndView<br>    ModelAndView是springmvc框架的一个底层对象，包括Model和View<br>    第八步：前端控制器请求视图解析器去进行视图解析，根据逻辑图名解析成真正的视图（jsp）<br>    第九步：视图解析器向前端控制器返回View<br>    第十步：前端控制器进行视图渲染，视图渲染将模型数据（在ModelAndView对象中）填充到request域<br>    第十一步：前端控制器向用户响应结果</p>
-<p>Springmvc框架常用注解<br>    @Controller<br>        @Controller用于标记在一个类上，使用它标记的类就是一个springmvc Controller对象。分发处理器将会扫描使用了该注解的方法，并检测该方法是否使用了@RequestMapping注解。<br>    @RequestMapping<br>        该注解是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。<br>    @Resource和@Autowired<br>        @Resource和@Autowired都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是spring支持该注解的注入。<br>    共同点：<br>        两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。<br>    不同点：<br>        @Autowired是spring提供的注解。@Autowired注解是按照类型（byType）装配依赖对象，默认情况下他要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。<br>    @Resource默认按照byName自动注入，@Resource有两个重要的属性：name和type，而spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用bytype自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。<br>    @ModelAttribute和@SessionAttributes<br>         代表的是：该Controller的所有方法在调用前，先执行此@ModelAttribute方法，可用于注解和方法参数中，可以把这个@ModelAttribute特性，应用在BaseController当中，所有的Controller继承BaseController，即可实现在调用<br>    @PathVariable<br>        用于将请求URL中的模板变量映射到功能处理方法的参数上，即取出uri模板中的变量作为参数，。<br>    @RequestParam<br>        主要用于在springmvc后台控制层获取参数，类似一种是request.getParameter(“name”)，他有三个常用参数：defaultValue=”0”,required=false，value=“isApp”；defaultValue表示设置默认值<br>    @ResponseBody<br>        该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区<br>        使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；<br>    @Component<br>        相当于通用的注解，当不知道一些类归到那个层时使用，但是不建议。<br>    @Repository<br>        用于注解dao层，在daoImpl类上面注解</p>
-<p>Springmvc怎么样设定重定向和转发的？<br>    转发：在返回值前面加“forward:”就可以让结果转发，譬如”forward:user.do?name=method”<br>    重定向：在返回值前面加“redirect:”就可以让返回值重定向，譬如“redirect:<a href="http://www.baidu.com”" target="_blank" rel="noopener">http://www.baidu.com”</a></p>
-<p>Springmvc中的控制器的注解一般用哪个，有没有别的注解可以替代？<br>    一般用@Controller注解，表示是控制层，不能用别的注解替代。</p>
-<p>Springmvc的控制器是单例模式，所以在多线程访问的时候又线程安全问题，不要用同步，会影响性能的，解决方案是在控制器里面不能写字段。</p>
-<p>@RequestMapping注解用在类上面是一个用来处理请求地址映射的注解，可以用于类或方法上。用于类上，表示类中所有响应请求的方法都是以该地址作为父路径。</p>
-<p>如果前台有很多参数传入，并且这些参数都是一个对象的，那么怎么样快速得到这个对象？<br>    直接在方法中声明这个对象，springmvc就自动会把属性赋值到这个对象里面。</p>
-<p>Springmvc中有个类把视图和数据都合并的一起的叫做ModelAndView。</p>
-<p>当一个方法向AJAX返回特殊对象，譬如Object,List等，需要加上@ResponseBody注解。</p>
-<p>Sprigmvc的异常处理<br>可以将异常抛给Spring框架，有Spring框架来处理；我们只需要配置简单的异常处理器，在异常处理器添视图页面即可。</p>
-<p>SpringMVC的好处<br>Springmvc的优点<br>（1）Spring MVC中提供一个DispatcherServlet, 无需额外开发。<br>（2）springMVC中使用基于xml的配置文件，可以编辑，无需重新编译应用程序。<br>（3）springMVC实例化控制器，并根据用户输入来构造bean.<br>（4）springMVC可以自动绑定用户输入，并正确的转换数据类型。例如，springMVC能自动解析字 符串，并设置float或decimal类型的属性。<br>（5）springMVC可以检验用户输入，若校验不通过，则重定向回输入表单。输入校验是可选的， 支持编码方式以及声明。关于这一点，springMVC内置了常见的校验器。<br>（6）springMVC是spring框架的一部分。可以利用spring提供的其它能力。<br>（7）springMVC支持国际化和本地化，支持根据用户区域显示多国语言。<br>（8）springMVC支持多种视图技术，最常见的JSP技术以及其它技术包括Velocity和FreeMarker</p>
-<p>详解：<br>    清晰的角色划分：控制器(controller)、验证器(validator)、命令对象(command obect)、表单对象(form object)、模型对象(model object)、Servlet分发器(DispatcherServlet)、处理器映射(handler mapping)、试图解析器(view resoler)等等。每一个角色都可以由一个专门的对象来实现。<br>    强大而直接的配置方式：将框架类和应用程序类都能作为JavaBean配置，支持跨多个context的引用，例如，在web控制器中对业务对象和验证器validator)的引用。<br>    可适配、非侵入：可以根据不同的应用场景，选择何事的控制器子类(simple型、command型、from型、wizard型、multi-action型或者自定义)，而不是一个单一控制器(比如Action/ActionForm)继承。<br>    可重用的业务代码：可以使用现有的业务对象作为命令或表单对象，而不需要去扩展某个特定框架的基类。<br>    可定制的绑定(binding)和验证(validation):比如将类型不匹配作为应用级的验证错误，这可以保证错误的值。再比如本地化的日期和数字绑定等等。在其他某些框架中，你只能使用字符串表单对象，需要手动解析它并转换到业务对象。<br>    可定制的handler mapping和view resolution：Spring提供从最简单的URL映射，到复杂的、专用的定制策略。与某些web MVC框架强制开发人员使用单一特定技术相比，Spring显得更加灵活。<br>    灵活的model转换：在Springweb框架中，使用基于Map的键/值对来达到轻易的与各种视图技术集成。<br>    可定制的本地化和主题(theme)解析：支持在JSP中可选择地使用Spring标签库、支持JSTL、支持Velocity(不需要额外的中间层)等等。<br>    简单而强大的JSP标签库(Spring Tag Library)：支持包括诸如数据绑定和主题(theme)之类的许多功能。他提供在标记方面的最大灵活性。<br>    JSP表单标签库：在Spring2.0中引入的表单标签库，使用在JSP编写表单更加容易。<br>    Spring Bean的生命周期可以被限制在当前的HTTp Request或者HTTp Session。准确的说，这并非Spring MVC框架本身特性，而应归属于Spring MVC使用的WebApplicationContext容器。</p>
-<p>SSM三个框架的优点。</p>
-<p>一、mybatis的优缺点：<br>    优点：a、sql写在xml文件中，便于统一管理和优化，解除sql和程序代码的耦合。<br>    b、提供映射标签，支持对象和和数据库orm字段关系的映射，支持对象关系映射标签，支持对象关系的组建<br>    c、提供xml标签，支持编写动态sql。<br>    　 缺点：a、工作量较大，特别是在表的字段多，关联表多的情况下<br>    　　　　 b、sql语句的编写依赖于数据库，移植性差。<br>    　　　　 c、不支持级联删除，级联更新，需要自己对表进行删除。</p>
-<p>二、spring的优点：<br>　　A、通过Spring的IOC特性，将对象之间的依赖关系交给了Spring控制，方便解耦，简化了开发。<br>　　B、通过Spring的AOP特性，很容易实现事务，日志，权限的控制。<br>　　C、提供了对其他优秀开源框架的集成支持。<br>　　D、低侵入式。</p>
-<p>三、SpringMVC的优点<br>　　A、springMVC是使用了MVC设计思想的轻量级web框架，对web层进行解耦，是的我们开发更简洁。<br>　　B、与Spring无缝衔接。<br>　　C、灵活的数据验证，格式化，数据绑定机制。</p>
-<p>四、整合分析<br>　　A、spring MVC ＋ spring +mybatis，是标准的MVC设计模式，将整个系统划分为显示层，Controller层，Service层，DAO层四层<br>    使用Spring MVC负责请求的转发和视图管理<br>    spring实现业务对象管理，mybatis作为数据对象的持久化引擎。<br>　　B、Spring是一个开源框架，Spring是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架，还能更好的让其他框架整合。<br>　　C、Spring MVC框架是有一个MVC框架，通过实现Model-View-Controller模式来很好地将数据、业务与展现进行分离。<br>　　D、MyBatis 是一个基于Java的持久层框架</p>
+        <p><strong>初始化过程</strong><br>1 调用beanFactoryPostProcessor 的无参构造函数 构建beanFactoryPostProcessor  调用 psotProcessorBeanfactory(),</p>
+<p>2调用beanPostProcessor 无参构造函数</p>
+<p>3调用InstantiationAwareBeanPostProcessorAdapter无参构造函数 构建InstantiationAwareBeanPostProcessorAdapter</p>
+<p>3.1  调用本类(InstantiationAwareBeanPostProcessorAdapter) postProcessBeforeInstantiation() 方法<br>3.1.1调用bean中的无参构造函数</p>
+<a id="more"></a>
+<p>3.2调用本类(InstantiationAwareBeanPostProcessorAdapter)的postrocessorPropertyValue对已经实例化的bean注入属性</p>
+<p>3.3调用BeanNameAware 接口的 setBeanName方法</p>
+<p>3.4调用BeanFactoryAware的setBeanfactory方法</p>
+<p>3.5 调用2中beanPostProcessor 的 postProcessorBeforInitalization 对实体类进行修改</p>
+<p>3.6调用调用initializingBean接口的afterPropertySet方法</p>
+<p>3.7 调用bean的init方法</p>
+<p>3.8 调用2中beanPostProcessor中的postProcessorbeforInitialization</p>
+<p>3.9调用本类(InstantiationAwareBeanPostProcessorAdapter)的postProcessAfterInitialization()方法</p>
+<p>到此 springbean容器初始化完成</p>
+<p><strong>spring 容器销毁</strong></p>
+<p>4调用diPosiableBean接口 调用他的destory() 方法  </p>
+<p>5调用bean的destory方法<br><img src="https://img-blog.csdnimg.cn/20200521214408240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTU4MjQ2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
 
       
     </div>
@@ -306,13 +307,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a  href="/2020/05/18/ssm/">ssm</a></p>
+        <p><span>本文标题:</span><a  href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/">bean声明周期</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 老高 的个人博客">老高</a></p>
-        <p><span>发布时间:</span>2020年05月18日 - 20时16分</p>
-        <p><span>最后更新:</span>2020年05月18日 - 20时39分</p>
+        <p><span>发布时间:</span>2020年05月21日 - 21时46分</p>
+        <p><span>最后更新:</span>2020年05月21日 - 21时52分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/05/18/ssm/" title="ssm">https://sanye123.github.io/2020/05/18/ssm/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://sanye123.github.io/2020/05/18/ssm/　　作者: 老高" title=""></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/" title="bean声明周期">https://sanye123.github.io/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://sanye123.github.io/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/　　作者: 老高" title=""></span>
         </p>
         <p>
             <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
@@ -323,15 +324,11 @@
 
 <nav id="article-nav">
   
-    <a  href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          plaql基础
-        
-      </div>
-    </a>
   
+    <a  href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">微信公众号</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -414,13 +411,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/" title="上一篇: plaql基础">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a  href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" title="下一篇: 微信公众号">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/">bean声明周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/">微信公众号</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/plaql%E5%9F%BA%E7%A1%80/">plaql基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/18/ssm/">ssm</a></li></ul>

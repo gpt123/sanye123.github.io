@@ -245,6 +245,71 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-bean声明周期" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/" class="article-date">
+      <time datetime="2020-05-21T13:46:42.473Z" itemprop="datePublished">2020-05-21</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a  class="article-title" href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/">bean声明周期</a>
+    </h1>
+  
+
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p><strong>初始化过程</strong><br>1 调用beanFactoryPostProcessor 的无参构造函数 构建beanFactoryPostProcessor  调用 psotProcessorBeanfactory(),</p>
+<p>2调用beanPostProcessor 无参构造函数</p>
+<p>3调用InstantiationAwareBeanPostProcessorAdapter无参构造函数 构建InstantiationAwareBeanPostProcessorAdapter</p>
+<p>3.1  调用本类(InstantiationAwareBeanPostProcessorAdapter) postProcessBeforeInstantiation() 方法<br>3.1.1调用bean中的无参构造函数</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a   href="/2020/05/21/bean%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F/#more">查看更多 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-微信公众号" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
